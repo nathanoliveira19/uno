@@ -1,3 +1,4 @@
+import random
 
 def cartasPermitidas(jogador, carta):
     permitidas = []
@@ -17,5 +18,53 @@ def cartasPermitidas(jogador, carta):
                 permitidas.append(j)
     return permitidas
 
-def comprar(jogador, comprar):
+
+def jogar_carta(jogador, jogar, mesa):
+    permitidas = cartasPermitidas(jogador, mesa[-1:][0])
+    if jogar in permitidas:
+        if(jogar["cor"] == "branco"):
+            cor = input("Escolha uma cor: ")
+            if cor == "amarelo" or cor == "azul" or cor == "verde" or cor == "vermelho":
+                jogar["cor"] = cor
+            else:
+                return jogador, mesa, False
+        jogador.remove(jogar)
+        mesa.append(jogar)
+        return jogador, mesa, True
+    else:
+        return jogador, mesa, False
+
+def jogar_carta_cpu(jogador, jogar, mesa):
+    permitidas = cartasPermitidas(jogador, mesa[-1:][0])
+    if jogar in permitidas:
+        if(jogar["cor"] == "branco"):
+            cores = ["amarelo", "azul", "verde", "vermelho"]
+            jogar["cor"] = cores[random.randint(0, len(cores) - 1)]
+        jogador.remove(jogar)
+        mesa.append(jogar)
+        return jogador, mesa, True
+    else:
+        return jogador, mesa, False
+
+def comprar_cartas(jogador, comprar):
     jogador.append(comprar.pop())
+    return jogador, comprar
+
+def acao(carta, jogador, comprar, aplicar):
+    reverso = False
+    pular = False
+    if aplicar is True:
+        if carta["tipo"] == "reverso":
+            reverso = True
+        elif carta["tipo"] == "pular":
+            pular = True
+        elif carta["tipo"] == "mais2":
+            jogador.append(comprar.pop())
+            jogador.append(comprar.pop())
+        elif carta["tipo"] == "mais4":
+            jogador.append(comprar.pop())
+            jogador.append(comprar.pop())
+            jogador.append(comprar.pop())
+            jogador.append(comprar.pop()) 
+
+    return jogador, comprar, reverso, pular

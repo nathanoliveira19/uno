@@ -69,5 +69,9 @@ mais2Vermelho = {"nome" : "mais2Vermelho", "tipo": "mais2", "cor" : "vermelho"}
 
 #Cartas especiais
 
-mais4 = {"nome" : "mais4", "tipo": "mais4", "cor": None}
-coringa = {"nome" : "coringa", "tipo": "coringa", "cor": None}
+mais4 = {"nome" : "mais4", "tipo": "mais4", "cor": "branco"}
+coringa = {"nome" : "coringa", "tipo": "coringa", "cor": "branco"}
+
+#Carta UNO
+
+uno = {"nome" : "uno", "tipo": "uno", "cor": "branco"}

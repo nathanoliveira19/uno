@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 from termcolor import colored
+import math
 
 def printLinhas(linhas, carta):
     for linha in linhas:
@@ -11,15 +12,24 @@ def printLinhas(linhas, carta):
             print(colored(linha, 'green'))
         elif carta["cor"] == "vermelho":
             print(colored(linha, 'red'))
+        elif carta["cor"] == "branco":
+            print(colored(linha, 'white'))
         else:
             print("Essa carta precisa ter uma cor definida!")    
 
-def printLinhasAlternado(linhas):
-    aux = ["white", "yellow", "green", "red", "blue", "grey"]
-    i = 0
-    for linha in linhas:
-        print(colored(linha, aux[i]))
-        i = (i + 1) % 6
+
+def stringCartaUNO(carta):
+    linhas = []
+    linhas.append("┌───────────┐")
+    linhas.append("│           │")
+    linhas.append("│           │")
+    linhas.append("│           │")
+    linhas.append("│    UNO    │")
+    linhas.append("│           │")
+    linhas.append("│           │")
+    linhas.append("│           │")
+    linhas.append("└───────────┘")
+    return linhas
 
 def stringCartaComum(carta):
     linhas = []
@@ -134,7 +144,8 @@ def desenharDeck(cartas):
             desenho = stringCartaMaisQuatro(carta)
         elif carta["tipo"] == "coringa":
             desenho = stringCartaCoringa(carta)
-        
+        elif carta["tipo"] == "uno":
+            desenho = stringCartaUNO(carta)
         if carta["cor"] == "amarelo":
             color = "yellow"
         elif carta["cor"] == "azul":
@@ -143,13 +154,15 @@ def desenharDeck(cartas):
             color = "red"
         elif carta["cor"] == "verde":
             color = "green"
+        else:
+            color = "white"
             
         i = 0
         for linha in desenho:
             if primeiro == 0:
                 print_arg.append(colored(linha, color))
             else:
-                print_arg[i] = print_arg[i] + "       " +  colored(linha, color)
+                print_arg[i] = print_arg[i] + "  " +  colored(linha, color)
             i = i + 1
         primeiro = 1
     for arg in print_arg:
@@ -170,3 +183,18 @@ def desenharCarta(carta):
         desenharCartaCoringa(carta)
     else:
         print("Não foi possível desenhar a carta")
+
+def desenharDeckSeparado(cartas, limiteLinha):
+    indiceEsq = 0
+    indiceDir = indiceEsq + limiteLinha
+    acabou = False
+    while not acabou:
+        desenharDeck(cartas[indiceEsq:indiceDir])
+        aux = indiceEsq
+        indiceEsq = indiceDir
+        if aux + limiteLinha < len(cartas):
+            indiceDir = aux + limiteLinha
+        elif indiceDir != len(cartas):
+            indiceDir = len(cartas)
+        else:
+            acabou = True
