@@ -34,6 +34,7 @@ while comando != "s":
             if comando != "comprar" and comando != "s":
                 jogador, mesa, resultadoOperacao = jogar_carta(jogador, jogador[int(comando)], mesa)
                 aplicar = True
+
                 if resultadoOperacao is False:
                     print("Não foi possível jogar esta carta", end="\r")
                     time.sleep(1)
@@ -52,7 +53,9 @@ while comando != "s":
             print("Comando inválido", end="\r")
             resultadoOperacao = False
             time.sleep(1)
-
+    else:
+        pular = False
+        reverso = False
     #Vez da cpu
     if aplicar is True:
         cpu, comprar, reverso, pular = acao(mesa[-1:][0], cpu, comprar, aplicar)
@@ -79,4 +82,7 @@ while comando != "s":
             cpu, comprar = comprar_cartas(cpu, comprar)
             print("Comprando carta...", end="\r")
             time.sleep(3.5)
+    else:
+        pular = False
+        reverso = False
 
